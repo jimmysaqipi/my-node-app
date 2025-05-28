@@ -1,13 +1,12 @@
-FROM node:18-alpine AS builder
-WORKDIR /app
+FROM node:18 AS builder
+WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci --only=production
 
 # Runtime stage
-FROM node:18-alpine
-WORKDIR /app
-COPY --from=builder /app/node_modules ./node_modules
+FROM node:18
+WORKDIR /usr/src/app
 COPY . .
-EXPOSE 3000
+EXPOSE 8000
 USER node
 CMD ["npm", "start"]
