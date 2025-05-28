@@ -4,15 +4,15 @@ pipeline {
     environment {
         DOCKER_HUB = credentials('docker-hub-creds')
         IMAGE_NAME = "your-dockerhub-username/nodejs-app"
-        STAGING_PORT = "3001"
-        PRODUCTION_PORT = "3000"
+        STAGING_PORT = "8001"
+        PRODUCTION_PORT = "8000"
     }
     
     stages {
         stage('Checkout') {
             steps {
                 git branch: 'main', 
-                url: 'https://github.com/your-username/your-repo.git',
+                url: 'https://github.com/jimmysaqipi/my-node-app.git',
                 credentialsId: 'github-ssh' // or use HTTPS
             }
         }
@@ -67,7 +67,7 @@ pipeline {
                 docker stop node-staging || true
                 docker rm node-staging || true
                 docker run -d \
-                  -p ${STAGING_PORT}:3000 \
+                  -p ${STAGING_PORT}:8000 \
                   --name node-staging \
                   ${IMAGE_NAME}:${env.BUILD_TAG}
                 """
@@ -88,7 +88,7 @@ pipeline {
                 docker stop node-prod || true
                 docker rm node-prod || true
                 docker run -d \
-                  -p ${PRODUCTION_PORT}:3000 \
+                  -p ${PRODUCTION_PORT}:8000 \
                   --name node-prod \
                   ${IMAGE_NAME}:${env.BUILD_TAG}
                 """
