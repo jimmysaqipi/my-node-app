@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         DOCKER_HUB = credentials('docker-hub-creds')
-        IMAGE_NAME = "your-dockerhub-username/nodejs-app"
+        IMAGE_NAME = "docker-hub/my-node-app5"
         STAGING_PORT = "8001"
         PRODUCTION_PORT = "8000"
     }
